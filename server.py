@@ -86,9 +86,7 @@ def init_db():
 # ─────────────────────────────────────────────
 def sanitize(text: str, max_len: int = 1000) -> str:
     text = text.strip()
-    text = re.sub(r"[<>&\"']", lambda m: {
-        "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&#x27;"
-    }[m.group()], text)
+    text = text.replace("<", "&lt;").replace(">", "&gt;")
     return text[:max_len]
 
 def now_iso() -> str:
