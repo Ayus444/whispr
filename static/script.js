@@ -114,11 +114,10 @@ async function pollMessages() {
 
     if (d.messages && d.messages.length) {
       d.messages.forEach(msg => {
-        // Skip user messages we already rendered
-        if (msg.sender === "user" && msg.id <= lastMsgId) return;
-        appendBubble(msg);
-        lastMsgId = Math.max(lastMsgId, msg.id);
-      });
+    if (msg.id <= lastMsgId) return; // skip ALL already seen messages
+    appendBubble(msg);
+    lastMsgId = Math.max(lastMsgId, msg.id);
+});
       updateMsgCount();
       // Show typing indicator briefly when admin message arrives
       const adminMsgs = d.messages.filter(m => m.sender === "admin");
